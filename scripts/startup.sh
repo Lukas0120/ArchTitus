@@ -249,7 +249,7 @@ keymap () {
 echo -ne "
 Please select key board layout from this list"
 # These are default key maps as presented in official arch repo archinstall
-options=(us sv-latin1 ca cf cz de dk es et fa fi fr gr hu il it lt lv mk nl no pl ro ru sg ua uk)
+options=(us se ca cf cz de dk es et fa fi fr gr hu il it lt lv mk nl no pl ro ru sg ua uk)
 
 select_option $? 4 "${options[@]}"
 keymap=${options[$?]}
@@ -269,7 +269,7 @@ select_option $? 1 "${options[@]}"
 
 case ${options[$?]} in
     y|Y|yes|Yes|YES)
-    set_option MOUNT_OPTIONS "noatime,compress-force=zstd:3,ssd,discard=async,autodefrag,commit=120";;
+    set_option MOUNT_OPTIONS "noatime,compress-force=zstd:3,space_cache=v2,ssd,discard=async,autodefrag,commit=60";;
     n|N|no|NO|No)
     set_option MOUNT_OPTIONS "noatime,compress=zstd,commit=120";;
     *) echo "Wrong option. Try again";drivessd;;

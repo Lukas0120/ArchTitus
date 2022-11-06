@@ -1,0 +1,28 @@
+#!/bin/bash
+#sh ~/.screenlayout/monitor.sh &
+sxhkd &
+#picom &
+#tint2 &
+xfsettingsd &
+bash /home/lulle/.config/polybar/default/launch.sh &
+feh --bg-scale ~/backgrounds/adaptive.jpg &
+#/usr/lib/xfce-polkit/xfce-polkit &
+#dbus-launch dunst --config ~/.config/dunst/dunstrc &
+#dex -a -s /etc/xdg/autostart/:~/.config/autostart/ &
+wormc frame-active-pixel $((16#FF62AEEF))
+wormc frame-inactive-pixel $((16#FFE06B74)) # todo: diff color for active window (the bug here was fixed, this works now)
+wormc frame-left T
+wormc text-font 'CaskaydiaCove Nerd Font:size=11'
+wormc frame-right 'I;M;C'
+wormc button-offset 5 7
+wormc close-path ~/.config/worm/buttons/close.png
+wormc minimize-path ~/.config/worm/buttons/minimize.png
+wormc maximize-path ~/.config/worm/buttons/maximize.png
+wormc button-size 20
+wormc border-width 4
+wormc border-active-pixel $((16#FF5ADECD))
+wormc border-inactive-pixel $((16#FFE06B74))
+wormc struts 70 15 15 15
+wormc gaps 15
+wormc layout tiling
+wormc frame-height 0

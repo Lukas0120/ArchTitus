@@ -1,5 +1,4 @@
 mesa
-xorg
 xorg-server
 xorg-apps
 xorg-drivers

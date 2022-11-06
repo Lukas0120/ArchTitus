@@ -1,5 +1,6 @@
 source /etc/profile
 export PATH=$PATH:~/.local/bin
+export PATH=/home/lulle/clang/bin:${PATH}
 
 #!/bin/sh
 

@@ -22,8 +22,8 @@ echo -ne "
                     Network Setup 
 -------------------------------------------------------------------------
 "
-pacman -S --noconfirm --needed networkmanager dhclient
-systemctl enable --now NetworkManager
+pacman -S --noconfirm --needed git wget dhcpcd freetype2
+systemctl enable --now dhcpcd
 echo -ne "
 -------------------------------------------------------------------------
                     Setting up mirrors for optimal download 
@@ -45,6 +45,9 @@ TOTAL_MEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
 if [[  $TOTAL_MEM -gt 8000000 ]]; then
 sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
 sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
+sed "s,-mtune=generic,-mtune=native,g" -i /etc/makepkg.conf
+#Enable link time optimizations
+sed "s,\!lto,lto,g" -i /etc/makepkg.conf
 fi
 echo -ne "
 -------------------------------------------------------------------------
@@ -63,12 +66,13 @@ localectl --no-ask-password set-keymap ${KEYMAP}
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
-
 #Add parallel downloading
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-
+sed "s,\#\Color,Color,g" -i /etc/pacman.conf
 #Enable multilib
+sed "s,\#\COMPRESSION=\"lz4\",COMPRESSION=\"lz4\",g" -i /etc/mkinitcpio.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+
 pacman -Sy --noconfirm --needed
 
 echo -ne "
@@ -114,7 +118,7 @@ echo -ne "
 # Graphics Drivers find and install
 gpu_type=$(lspci)
 if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
-    pacman -S --noconfirm --needed nvidia
+    pacman -S --noconfirm --needed dkms nvidia-dkms nvidia-utils nvidia-settings mesa
 	nvidia-xconfig
 elif lspci | grep 'VGA' | grep -E "Radeon|AMD"; then
     pacman -S --noconfirm --needed xf86-video-amdgpu

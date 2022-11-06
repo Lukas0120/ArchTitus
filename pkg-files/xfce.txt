@@ -72,4 +72,8 @@ sxhkd
 zram-generator
 wget
 nano-syntax-highlighting
+ananicy-cpp-git
+cachyos-ananicy-rules
+cachyos-rate-mirrors
+rxvt-unicode-truecolor-wide-glyphs
 --END OF MINIMAL INSTALL--

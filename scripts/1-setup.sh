@@ -22,7 +22,23 @@ echo -ne "
                     Network Setup 
 -------------------------------------------------------------------------
 "
-pacman -S --noconfirm --needed git wget dhcpcd freetype2
+pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key F3B607488DB35A47
+pacman -U --noconfirm 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-2-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/pacman-6.0.2-7-x86_64.pkg.tar.zst'
+
+cat << EOF >> /etc/pacman.conf
+[cachyos-v3]
+Include = /etc/pacman.d/cachyos-v3-mirrorlist
+SigLevel = Never
+
+[cachyos]
+Include = /etc/pacman.d/cachyos-mirrorlist
+SigLevel = Never
+EOF
+
+pacman -Sy --noconfirm
+pacman -Syu --noconfirm
+pacman -S --noconfirm --needed git wget nano f2fs-tools dhcpcd freetype2
 systemctl enable --now dhcpcd
 echo -ne "
 -------------------------------------------------------------------------
@@ -139,7 +155,6 @@ echo -ne "
 gpu_type=$(lspci)
 if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
     pacman -S --noconfirm --needed dkms nvidia-dkms nvidia-utils nvidia-settings mesa
-	nvidia-xconfig
 elif lspci | grep 'VGA' | grep -E "Radeon|AMD"; then
     pacman -S --noconfirm --needed xf86-video-amdgpu
 elif grep -E "Integrated Graphics Controller" <<< ${gpu_type}; then

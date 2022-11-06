@@ -84,7 +84,7 @@ elif [[ "${DESKTOP_ENV}" == "openbox" ]]; then
 else
   if [[ ! "${DESKTOP_ENV}" == "server"  ]]; then
   sudo pacman -S --noconfirm --needed irqbalance
-  systemctl enable irqbalance
+  systemctl enable irqbalance ananicy-cpp
   fi
 fi
 

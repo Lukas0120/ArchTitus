@@ -34,87 +34,93 @@ echo "
 "
 
 PKGS=(
-base-devel
-firefox
+'base-devel'
+'firefox'
 
 )
 
 for PKG in "${PKGS[@]}"; do
     echo "INSTALLING: ${PKG}"
-    sudo pacman -S "$PKG" --needed --noconfirm --overwrite *
+    sudo pacman -S "$PKG" --needed --noconfirm --overwrite '*'
 done
 
 
 PKGS=(
-cmake
-extra-cmake-modules
-ninja
-gperftools
-python-setuptools
-boost
-boost-libs
-bc
-bison
-flex
-musl
-meson
-lz4
-lzo
-cpupower
-llvm
-llvm-libs
-compiler-rt
-clang
-lld
-lldb
-polly
-libunwind
-openmp
-libc++
-libc++abi
-htop
-neofetch
-jemalloc
-zstd
-pahole
-cpio
-zsh
-zsh-completions
-asp
-micro
-lz4
-xorg-mkfontscale
-xorg-fonts-encodings
-xorg-font-util
-xorg-server
-xorg-server-devel
-xorg-xinit
-xorg-fonts-misc
-imagemagick
-w3m
-wget
-curl
-alacritty
-thunar
-geany
-geany-plugins
-xfce4-settings
-feh
-rofi
-polybar
-irqbalance
-dhcpcd
-alacritty
-sxhkd
-zram-generator
-wget
-nano-syntax-highlighting
+'cmake'
+'extra-cmake-modules'
+'ninja'
+'gperftools'
+'python-setuptools'
+'boost'
+'boost-libs'
+'bc'
+'bison'
+'flex'
+'musl'
+'meson'
+'lz4'
+'lzo'
+'cpupower'
+'llvm'
+'llvm-libs'
+'compiler-rt'
+'clang'
+'lld'
+'lldb'
+'polly'
+'libunwind'
+'openmp'
+'libc++'
+'libc++abi'
+'htop'
+'neofetch'
+'jemalloc'
+'zstd'
+'pahole'
+'paru'
+'yay'
+'cpio'
+'zsh'
+'zsh-completions'
+'asp'
+'micro'
+'lz4'
+'xorg-mkfontscale'
+'xorg-fonts-encodings'
+'xorg-font-util'
+'xorg-server'
+'xorg-server-devel'
+'xorg-xinit'
+'xorg-fonts-misc'
+'imagemagick'
+'w3m'
+'wget'
+'curl'
+'alacritty'
+'thunar'
+'geany'
+'geany-plugins'
+'xfce4-settings'
+'feh'
+'rofi'
+'polybar'
+'irqbalance'
+'dhcpcd'
+'alacritty'
+'sxhkd'
+'worm'
+'zram-generator'
+'ananicy-cpp-git'
+'cachyos-ananicy-rules'
+'cachyos-rate-mirrors'
+'wget'
+'rxvt-unicode-truecolor-wide-glyphs'
 
 )
 
 for PKG in "${PKGS[@]}"; do
     echo "INSTALLING: ${PKG}"
-    sudo pacman -S "$PKG" --needed --overwrite *
+    sudo pacman -S "$PKG" --needed --overwrite '*'
 done
 
 echo "
@@ -177,16 +183,16 @@ sudo pacman -Qtdq | sudo pacman -Rns -
 chsh -s /usr/bin/zsh
 
 #cd ~/lulz/pkg
-#sudo pacman -U *.pkg.tar.zst --overwrite *
+#sudo pacman -U *.pkg.tar.zst --overwrite '*'
 yay -S arch-silence-grub-theme-git update-grub powerpill python3-aur bauerbill zenpower3-dkms --noconfirm
 
 sudo modprobe -r k10temp
-sudo bash -c sudo echo -e "\n# replaced with zenpower\nblacklist k10temp" >> /etc/modprobe.d/blacklist.conf
+sudo bash -c 'sudo echo -e "\n# replaced with zenpower\nblacklist k10temp" >> /etc/modprobe.d/blacklist.conf'
 sudo modprobe zenpower
 sudo systemctl enable ananicy
 sudo systemctl disable NetworkManager.service
 sudo systemctl enable irqbalance
-sudo systemctl enable uksmd
+#sudo systemctl enable uksmd
 sudo systemctl enable haveged
 sudo systemctl enable dhcpcd
 

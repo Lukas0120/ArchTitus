@@ -207,12 +207,12 @@ filesystem () {
 echo -ne "
 Please Select your file system for both boot and root
 "
-options=("btrfs" "xfs" "luks" "exit")
+options=("btrfs" "f2fs" "luks" "exit")
 select_option $? 1 "${options[@]}"
 
 case $? in
 0) set_option FS btrfs;;
-1) set_option FS xfs;;
+1) set_option FS f2fs;;
 2) 
     set_password "LUKS_PASSWORD"
     set_option FS luks

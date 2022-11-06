@@ -3,6 +3,7 @@ python3-aur
 bauerbill
 update-grub
 zenpower3-dkms
+worm-git
 --END OF MINIMAL INSTALL--
 autojump
 brave-bin

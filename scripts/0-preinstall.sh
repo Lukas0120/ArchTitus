@@ -29,10 +29,10 @@ source $CONFIGS_DIR/setup.conf
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
 pacman -S --noconfirm archlinux-keyring #update keyrings to latest to prevent packages failing to install
-pacman -S --noconfirm --needed pacman-contrib terminus-font
+pacman -S --noconfirm --needed pacman-contrib terminus-font --overwrite '*'
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-pacman -S --noconfirm --needed reflector rsync grub f2fs-tools
+pacman -S --noconfirm --needed reflector rsync grub f2fs-tools --overwrite '*'
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 echo -ne "
 -------------------------------------------------------------------------
@@ -46,7 +46,7 @@ echo -ne "
                     Installing Prerequisites
 -------------------------------------------------------------------------
 "
-pacman -S --noconfirm --needed gptfdisk f2fs-tools btrfs-progs glibc nano dhcpcd
+pacman -S --noconfirm --needed gptfdisk f2fs-tools btrfs-progs glibc nano dhcpcd --overwrite '*'
 echo -ne "
 -------------------------------------------------------------------------
                     Formating Disk
@@ -151,7 +151,7 @@ echo -ne "
                     Arch Install on Main Drive
 -------------------------------------------------------------------------
 "
-pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode f2fs-tools btrfs-progs nano sudo archlinux-keyring wget libnewt --noconfirm --needed
+pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode f2fs-tools btrfs-progs nano sudo archlinux-keyring wget libnewt --noconfirm --needed --overwrite '*'
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 cp -R ${SCRIPT_DIR} /mnt/root/ArchTitus
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist

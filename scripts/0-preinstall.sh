@@ -119,7 +119,7 @@ if [[ "${FS}" == "btrfs" ]]; then
 elif [[ "${FS}" == "f2fs" ]]; then
     mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
     mkfs.f2fs -f -l ROOT -O extra_attr,inode_checksum,sb_checksum,compression ${partition3}
-    mount -o compress_algorithm=zstd:6,lazytime ${partition3} /mnt
+    mount -o compress_algorithm=zstd:3,lazytime ${partition3} /mnt
 elif [[ "${FS}" == "luks" ]]; then
     mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
 # enter luks password to cryptsetup and format root partition
@@ -151,7 +151,7 @@ echo -ne "
                     Arch Install on Main Drive
 -------------------------------------------------------------------------
 "
-pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode f2fs-tools btrfs-progs xfsprogs nano sudo archlinux-keyring wget libnewt --noconfirm --needed
+pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode f2fs-tools btrfs-progs nano sudo archlinux-keyring wget libnewt --noconfirm --needed
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 cp -R ${SCRIPT_DIR} /mnt/root/ArchTitus
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist

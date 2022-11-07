@@ -76,4 +76,5 @@ ananicy-cpp-git
 cachyos-ananicy-rules
 cachyos-rate-mirrors
 rxvt-unicode-truecolor-wide-glyphs
+worm
 --END OF MINIMAL INSTALL--

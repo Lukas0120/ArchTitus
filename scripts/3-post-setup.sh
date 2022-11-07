@@ -56,6 +56,23 @@ echo -e "All set!"
 
 echo -ne "
 -------------------------------------------------------------------------
+               Lulle Configs
+-------------------------------------------------------------------------
+"
+wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/makepkg.conf -O /etc/makepkg.conf
+wget -N https://mirror.cachyos.org/llvm-bolt.tar.zst -O /home/lulle/llvm-bolt.tar.zst
+unzstd /home/lulle/llvm-bolt.tar.zst
+tar xvf /home/lulle/llvm-bolt.tar
+mv /home/lulle/llvm /home/lulle/clang
+chown -hR lulle /home/lulle/clang
+wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/home/.bashrc -O /home/lulle/.bashrc
+chown lulle /home/lulle/.bashrc
+ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
+sed "s,\#export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",g" -i /etc/profile.d/freetype2.sh
+
+echo -ne "
+-------------------------------------------------------------------------
                Enabling (and Theming) Login Display Manager
 -------------------------------------------------------------------------
 "
@@ -84,7 +101,7 @@ elif [[ "${DESKTOP_ENV}" == "openbox" ]]; then
 else
   if [[ ! "${DESKTOP_ENV}" == "server"  ]]; then
   sudo pacman -S --noconfirm --needed irqbalance
-  systemctl enable irqbalance ananicy-cpp
+  systemctl enable irqbalance ananicy-cpp fstrim.service
   fi
 fi
 

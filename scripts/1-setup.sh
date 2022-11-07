@@ -24,17 +24,9 @@ echo -ne "
 "
 pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key F3B607488DB35A47
-pacman -U --noconfirm 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-2-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/pacman-6.0.2-7-x86_64.pkg.tar.zst'
+pacman -U --noconfirm 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-2-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/pacman-6.0.2-9-x86_64.pkg.tar.zst'
 
-cat << EOF >> /etc/pacman.conf
-[cachyos-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-SigLevel = Never
-
-[cachyos]
-Include = /etc/pacman.d/cachyos-mirrorlist
-SigLevel = Never
-EOF
+wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/pacman.conf -O /etc/pacman.conf
 
 pacman -Sy --noconfirm
 pacman -Syu --noconfirm

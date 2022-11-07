@@ -1,7 +1,5 @@
 mesa
 xorg-server
-xorg-apps
-xorg-drivers
 xorg-xkill
 xorg-xinit
 xterm

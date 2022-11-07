@@ -137,7 +137,7 @@ fi
 
 # mount target
 mkdir -p /mnt/boot/efi
-mount -o noatime -L EFIBOOT /mnt/boot/
+mount -o noatime ${partition2} /mnt/boot/
 
 if ! grep -qs '/mnt' /proc/mounts; then
     echo "Drive is not mounted can not continue"
@@ -151,7 +151,7 @@ echo -ne "
                     Arch Install on Main Drive
 -------------------------------------------------------------------------
 "
-pacstrap /mnt base base-devel linux linux-firmware linux-headers amd-ucode f2fs-tools btrfs-progs nano sudo archlinux-keyring wget libnewt --noconfirm --needed --overwrite '*'
+pacstrap /mnt base base-devel linux linux-firmware linux-headers f2fs-tools lz4 efibootmgr grub nano sudo archlinux-keyring wget libnewt --noconfirm
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 cp -R ${SCRIPT_DIR} /mnt/root/ArchTitus
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist

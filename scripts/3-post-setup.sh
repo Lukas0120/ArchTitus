@@ -63,9 +63,12 @@ wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/m
 wget -N https://mirror.cachyos.org/llvm-bolt.tar.zst -O /home/lulle/llvm-bolt.tar.zst
 unzstd /home/lulle/llvm-bolt.tar.zst
 tar xvf /home/lulle/llvm-bolt.tar
+sleep 2
 mv /home/lulle/llvm /home/lulle/clang
+sleep 2
 chown -hR lulle /home/lulle/clang
 wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/home/.bashrc -O /home/lulle/.bashrc
+sleep 2
 chown lulle /home/lulle/.bashrc
 ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
@@ -149,6 +152,7 @@ else
 fi
 plymouth-set-default-theme -R arch-glow # sets the theme and runs mkinitcpio
 echo 'Plymouth theme installed'
+grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -ne "
 -------------------------------------------------------------------------

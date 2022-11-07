@@ -30,7 +30,7 @@ wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/p
 
 pacman -Sy --noconfirm
 pacman -Syu --noconfirm
-pacman -S --noconfirm --needed git wget nano f2fs-tools dhcpcd freetype2
+pacman -S --noconfirm linux linux-headers git wget nano f2fs-tools dhcpcd freetype2
 systemctl enable --now dhcpcd
 echo -ne "
 -------------------------------------------------------------------------
@@ -38,7 +38,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 pacman -S --noconfirm --needed pacman-contrib curl
-pacman -S --noconfirm --needed reflector rsync grub arch-install-scripts git
+pacman -S --noconfirm --needed reflector rsync efibootmgr grub arch-install-scripts git
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 nc=$(grep -c ^processor /proc/cpuinfo)
@@ -75,11 +75,8 @@ localectl --no-ask-password set-keymap ${KEYMAP}
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 #Add parallel downloading
-sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-sed "s,\#\Color,Color,g" -i /etc/pacman.conf
 #Enable multilib
 sed "s,\#\COMPRESSION=\"lz4\",COMPRESSION=\"lz4\",g" -i /etc/mkinitcpio.conf
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sed "s,\#\ set linenumbers, set linenumbers,g" -i /etc/nanorc
 sed "s,\#\ set positionlog, set positionlog,g" -i /etc/nanorc
 sed "s,\#\ set constantshow, set constantshow,g" -i /etc/nanorc
@@ -96,9 +93,6 @@ sed "s,\#\ set keycolor cyan, set keycolor cyan,g" -i /etc/nanorc
 sed "s,\#\ set functioncolor green, set functioncolor green,g" -i /etc/nanorc
 sed "s,\#\ include \"/usr/share/nano/\*.nanorc\", include \"/usr/share/nano/\*.nanorc\",g" -i /etc/nanorc
 echo "include /usr/share/nano-syntax-highlighting/*.nanorc" >> /etc/nanorc
-ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
-ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
-sed "s,\#export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",g" -i /etc/profile.d/freetype2.sh
 echo "blacklist k10temp" > /etc/modprobe.d/disable-k10temp.conf
 echo "zenpower" > /etc/modules-load.d/zenpower.conf
 pacman -Sy --noconfirm --needed
@@ -144,16 +138,9 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 # Graphics Drivers find and install
-gpu_type=$(lspci)
-if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
-    pacman -S --noconfirm --needed dkms nvidia-dkms nvidia-utils nvidia-settings mesa
-elif lspci | grep 'VGA' | grep -E "Radeon|AMD"; then
-    pacman -S --noconfirm --needed xf86-video-amdgpu
-elif grep -E "Integrated Graphics Controller" <<< ${gpu_type}; then
-    pacman -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
-elif grep -E "Intel Corporation UHD" <<< ${gpu_type}; then
-    pacman -S --needed --noconfirm libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
-fi
+
+pacman -S --noconfirm dkms nvidia-dkms nvidia-utils nvidia-settings mesa
+
 #SETUP IS WRONG THIS IS RUN
 if ! source $HOME/ArchTitus/configs/setup.conf; then
 	# Loop through user input until the user gives a valid username

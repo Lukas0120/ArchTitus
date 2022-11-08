@@ -25,8 +25,8 @@ echo -ne "
 pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key F3B607488DB35A47
 pacman -U --noconfirm 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-2-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-13-1-any.pkg.tar.zst' 'https://mirror.cachyos.org/repo/x86_64/cachyos/pacman-6.0.2-9-x86_64.pkg.tar.zst'
-wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/pacman.d/endeavouros-mirrorlist -O /etc/pacman.d/endeavouros-mirrorlist
-wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/pacman.conf -O /etc/pacman.conf
+wget -N https://raw.githubusercontent.com/Lukas0120/lulz/main/etc/pacman.d/endeavouros-mirrorlist -O /etc/pacman.d/endeavouros-mirrorlist
+wget -N https://raw.githubusercontent.com/Lukas0120/lulz/main/etc/pacman.conf -O /etc/pacman.conf
 
 pacman -Sy --noconfirm
 pacman -Syu --noconfirm
@@ -49,7 +49,7 @@ echo -ne "
 				changing the compression settings.
 -------------------------------------------------------------------------
 "
-wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/makepkg.conf -O /etc/makepkg.conf
+wget -N https://raw.githubusercontent.com/Lukas0120/lulz/main/etc/makepkg.conf -O /etc/makepkg.conf
 
 echo -ne "
 -------------------------------------------------------------------------

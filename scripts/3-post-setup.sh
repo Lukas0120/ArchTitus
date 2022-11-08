@@ -68,9 +68,7 @@ sleep 2
 chown -hR lulle /home/lulle/clang
 rm /home/lulle/llvm-bolt.tar.zst
 rm /home/lulle/llvm-bolt.tar
-wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/home/.bashrc -O /home/lulle/.bashrc
 sleep 2
-chown lulle /home/lulle/.bashrc
 
 
 git clone https://github.com/Lukas0120/lulz.git /home/lulle/lulz
@@ -81,6 +79,8 @@ mv -f /home/lulle/lulz/home/.* /home/lulle/
 mv -f /home/lulle/lulz/home/* /home/lulle/
 mv -f /home/lulle/lulz/home/. /home/lulle/
 
+echo "export PATH=/home/lulle/clang/bin:${PATH}"  >>  /home/lulle/.bashrc
+chown lulle /home/lulle/.bashrc
 ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
 sed "s,\#export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",g" -i /etc/profile.d/freetype2.sh

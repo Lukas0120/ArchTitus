@@ -3,7 +3,6 @@ linux-firmware
 linux-headers
 mesa
 xorg-server
-xorg-xkill
 xorg-xinit
 xterm
 binutils

@@ -3,7 +3,7 @@ python3-aur
 bauerbill
 update-grub
 zenpower3-dkms
-plymouth-git
+arch-silence-grub-theme-git
 --END OF MINIMAL INSTALL--
 autojump
 brave-bin

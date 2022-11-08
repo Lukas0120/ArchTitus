@@ -59,14 +59,15 @@ echo -ne "
                Lulle Configs
 -------------------------------------------------------------------------
 "
-wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/makepkg.conf -O /etc/makepkg.conf
 wget -N https://mirror.cachyos.org/llvm-bolt.tar.zst -O /home/lulle/llvm-bolt.tar.zst
 unzstd /home/lulle/llvm-bolt.tar.zst
-tar xvf /home/lulle/llvm-bolt.tar
+tar xvf /home/lulle/llvm-bolt.tar -C /home/lulle/
 sleep 2
 mv /home/lulle/llvm /home/lulle/clang
 sleep 2
 chown -hR lulle /home/lulle/clang
+rm /home/lulle/llvm-bolt.tar.zst
+rm /home/lulle/llvm-bolt.tar
 wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/home/.bashrc -O /home/lulle/.bashrc
 sleep 2
 chown lulle /home/lulle/.bashrc
@@ -79,34 +80,9 @@ echo -ne "
                Enabling (and Theming) Login Display Manager
 -------------------------------------------------------------------------
 "
-if [[ ${DESKTOP_ENV} == "kde" ]]; then
-  systemctl enable sddm.service
-  if [[ ${INSTALL_TYPE} == "FULL" ]]; then
-    echo [Theme] >>  /etc/sddm.conf
-    echo Current=Nordic >> /etc/sddm.conf
-  fi
 
-elif [[ "${DESKTOP_ENV}" == "gnome" ]]; then
-  systemctl enable gdm.service
+systemctl enable irqbalance ananicy-cpp fstrim.service
 
-elif [[ "${DESKTOP_ENV}" == "lxde" ]]; then
-  systemctl enable lxdm.service
-
-elif [[ "${DESKTOP_ENV}" == "openbox" ]]; then
-  systemctl enable lightdm.service
-  if [[ "${INSTALL_TYPE}" == "FULL" ]]; then
-    # Set default lightdm-webkit2-greeter theme to Litarvan
-    sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = litarvan #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
-    # Set default lightdm greeter to lightdm-webkit2-greeter
-    sed -i 's/#greeter-session=example.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
-  fi
-
-else
-  if [[ ! "${DESKTOP_ENV}" == "server"  ]]; then
-  sudo pacman -S --noconfirm --needed irqbalance
-  systemctl enable irqbalance ananicy-cpp fstrim.service
-  fi
-fi
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -139,19 +115,12 @@ echo -ne "
                Enabling (and Theming) Plymouth Boot Splash
 -------------------------------------------------------------------------
 "
-PLYMOUTH_THEMES_DIR="$HOME/ArchTitus/configs/usr/share/plymouth/themes"
-PLYMOUTH_THEME="arch-glow" # can grab from config later if we allow selection
-mkdir -p /usr/share/plymouth/themes
-echo 'Installing Plymouth theme...'
-cp -rf ${PLYMOUTH_THEMES_DIR}/${PLYMOUTH_THEME} /usr/share/plymouth/themes
-if  [[ $FS == "luks"]]; then
-  sed -i 's/HOOKS=(base udev*/& plymouth/' /etc/mkinitcpio.conf # add plymouth after base udev
-  sed -i 's/HOOKS=(base udev \(.*block\) /&plymouth-/' /etc/mkinitcpio.conf # create plymouth-encrypt after block hook
-else
-  sed -i 's/HOOKS=(base udev*/& plymouth/' /etc/mkinitcpio.conf # add plymouth after base udev
-fi
-plymouth-set-default-theme -R arch-glow # sets the theme and runs mkinitcpio
-echo 'Plymouth theme installed'
+mkdir -p /home/lulle/git-repos
+git clone https://github.com/h0tc0d3/arch-packages.git /home/lulle/git-repos/arch-packages
+git clone https://github.com/cachyos/linux-cachyos.git /home/lulle/git-repos/linux-cachyos
+git clone https://github.com/frogging-family/nvidia-all.git /home/lulle/git-repos/nvidia-all
+git clone https://github.com/rui314/mold /home/lulle/git-repos/mold
+chown -hR lulle /home/lulle/git-repos
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -ne "

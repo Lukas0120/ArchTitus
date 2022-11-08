@@ -49,14 +49,8 @@ echo -ne "
 				changing the compression settings.
 -------------------------------------------------------------------------
 "
-TOTAL_MEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
-if [[  $TOTAL_MEM -gt 8000000 ]]; then
-sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
-sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
-sed "s,-mtune=generic,-mtune=native,g" -i /etc/makepkg.conf
-#Enable link time optimizations
-sed "s,\!lto,lto,g" -i /etc/makepkg.conf
-fi
+wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/pacman/makepkg.conf -O /etc/makepkg.conf
+
 echo -ne "
 -------------------------------------------------------------------------
                     Setup Language to US and set locale  
@@ -69,7 +63,7 @@ timedatectl --no-ask-password set-ntp 1
 localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="en_US.UTF-8"
 ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 # Set keymaps
-localectl --no-ask-password set-keymap ${KEYMAP}
+localectl --no-ask-password set-keymap sv-latin1
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers

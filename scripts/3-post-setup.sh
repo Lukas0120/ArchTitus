@@ -73,11 +73,11 @@ sleep 2
 
 git clone https://github.com/Lukas0120/lulz.git /home/lulle/lulz
 chown -hR lulle /home/lulle/lulz
-mv -f /home/lulle/lulz/etc/* /etc/
+cp -rf /home/lulle/lulz/etc/* /etc/
 cp -rf /home/lulle/lulz/share/* /usr/share/
-mv -f /home/lulle/lulz/home/.* /home/lulle/
-mv -f /home/lulle/lulz/home/* /home/lulle/
-mv -f /home/lulle/lulz/home/. /home/lulle/
+cp -rfp /home/lulle/lulz/home/.* /home/lulle/
+cp -rfp /home/lulle/lulz/home/* /home/lulle/
+cp -rfp /home/lulle/lulz/home/. /home/lulle/
 
 echo "export PATH=/home/lulle/clang/bin:${PATH}"  >>  /home/lulle/.bashrc
 chown lulle /home/lulle/.bashrc

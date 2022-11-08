@@ -4,6 +4,7 @@ bauerbill
 update-grub
 zenpower3-dkms
 arch-silence-grub-theme-git
+btrfsmaintenance
 --END OF MINIMAL INSTALL--
 autojump
 brave-bin

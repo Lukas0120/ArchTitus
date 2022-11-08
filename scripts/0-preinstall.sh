@@ -32,7 +32,7 @@ pacman -S --noconfirm archlinux-keyring #update keyrings to latest to prevent pa
 pacman -S --noconfirm --needed pacman-contrib terminus-font
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-pacman -S --noconfirm --needed reflector rsync grub f2fs-tools
+pacman -S --noconfirm --needed reflector rsync grub f2fs-tools btrfs-progs
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 echo -ne "
 -------------------------------------------------------------------------
@@ -78,6 +78,8 @@ createsubvolumes () {
     btrfs subvolume create /mnt/@home
     btrfs subvolume create /mnt/@var
     btrfs subvolume create /mnt/@tmp
+    btrfs subvolume create /mnt/@opt
+    btrfs subvolume create /mnt/@srv
     btrfs subvolume create /mnt/@.snapshots
 }
 
@@ -86,6 +88,8 @@ mountallsubvol () {
     mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
     mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
     mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/var
+    mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/opt
+    mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/srv
     mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${partition3} /mnt/.snapshots
 }
 
@@ -98,7 +102,7 @@ subvolumesetup () {
 # mount @ subvolume
     mount -o ${MOUNT_OPTIONS},subvol=@ ${partition3} /mnt
 # make directories home, .snapshots, var, tmp
-    mkdir -p /mnt/{home,var,tmp,.snapshots}
+    mkdir -p /mnt/{home,var,tmp,opt,srv,.snapshots}
 # mount subvolumes
     mountallsubvol
 }
@@ -151,7 +155,7 @@ echo -ne "
                     Arch Install on Main Drive
 -------------------------------------------------------------------------
 "
-pacstrap /mnt base base-devel linux linux-firmware linux-headers f2fs-tools lz4 efibootmgr grub nano sudo archlinux-keyring wget libnewt --noconfirm
+pacstrap /mnt base base-devel linux linux-firmware linux-headers f2fs-tools btrfs-progs lz4 efibootmgr grub nano sudo archlinux-keyring wget libnewt --noconfirm
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 cp -R ${SCRIPT_DIR} /mnt/root/ArchTitus
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist

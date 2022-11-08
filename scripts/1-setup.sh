@@ -30,7 +30,7 @@ wget -N https://raw.githubusercontent.com/Lukas0120/lulz/main/etc/pacman.conf -O
 
 pacman -Sy --noconfirm
 pacman -Syu --noconfirm
-pacman -S --noconfirm linux linux-headers git wget nano f2fs-tools dhcpcd freetype2
+pacman -S --noconfirm linux linux-headers git wget nano f2fs-tools btrfs-progs dhcpcd freetype2
 systemctl enable --now dhcpcd
 echo -ne "
 -------------------------------------------------------------------------
@@ -71,22 +71,6 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: A
 #Add parallel downloading
 #Enable multilib
 sed "s,\#\COMPRESSION=\"lz4\",COMPRESSION=\"lz4\",g" -i /etc/mkinitcpio.conf
-sed "s,\#\ set linenumbers, set linenumbers,g" -i /etc/nanorc
-sed "s,\#\ set positionlog, set positionlog,g" -i /etc/nanorc
-sed "s,\#\ set constantshow, set constantshow,g" -i /etc/nanorc
-sed "s,\#\ set titlecolor bold\,white\,blue, set titlecolor bold\,lightwhite,g" -i /etc/nanorc
-sed "s,\#\ set promptcolor lightwhite\,grey, set promptcolor lightwhite\,lightblack,g" -i /etc/nanorc
-sed "s,\#\ set errorcolor bold\,white\,red, set errorcolor bold\,lightwhite\,red,g" -i /etc/nanorc
-sed "s,\#\ set spotlightcolor black\,lightyellow, set spotlightcolor black\,lime,g" -i /etc/nanorc
-sed "s,\#\ set selectedcolor lightwhite\,magenta, set selectedcolor lightwhite\,magenta,g" -i /etc/nanorc
-sed "s,\#\ set stripecolor \,yellow, set stripecolor yellow,g" -i /etc/nanorc
-sed "s,\#\ set statuscolor bold\,white\,green, set statuscolor bold\,white,g" -i /etc/nanorc
-sed "s,\#\ set scrollercolor cyan, set scrollercolor cyan,g" -i /etc/nanorc
-sed "s,\#\ set numbercolor cyan, set numbercolor magenta,g" -i /etc/nanorc
-sed "s,\#\ set keycolor cyan, set keycolor cyan,g" -i /etc/nanorc
-sed "s,\#\ set functioncolor green, set functioncolor green,g" -i /etc/nanorc
-sed "s,\#\ include \"/usr/share/nano/\*.nanorc\", include \"/usr/share/nano/\*.nanorc\",g" -i /etc/nanorc
-echo "include /usr/share/nano-syntax-highlighting/*.nanorc" >> /etc/nanorc
 echo "blacklist k10temp" > /etc/modprobe.d/disable-k10temp.conf
 echo "zenpower" > /etc/modules-load.d/zenpower.conf
 pacman -Sy --noconfirm --needed

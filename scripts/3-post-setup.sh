@@ -75,14 +75,17 @@ git clone https://github.com/Lukas0120/lulz.git /home/lulle/lulz
 chown -hR lulle /home/lulle/lulz
 cp -rf /home/lulle/lulz/etc/* /etc/
 cp -rf /home/lulle/lulz/share/* /usr/share/
-cp -rfp /home/lulle/lulz/home/.* /home/lulle/
 cp -rfp /home/lulle/lulz/home/* /home/lulle/
 cp -rfp /home/lulle/lulz/home/. /home/lulle/
+rm -r /home/lulle/btrfs
+rm -r /home/lulle/etc
+rm -r /home/lulle/cachyos-repo
+rm -r /home/lulle/share
 
 echo "export PATH=/home/lulle/clang/bin:${PATH}"  >>  /home/lulle/.bashrc
 chown lulle /home/lulle/.bashrc
-ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
-ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
+ln -sf /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+ln -sf /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
 sed "s,\#export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",g" -i /etc/profile.d/freetype2.sh
 
 echo -ne "
@@ -103,22 +106,16 @@ echo "  DHCP stopped"
 systemctl enable dhcpcd
 echo "  NetworkManager enabled"
 
-if [[ "${FS}" == "luks" || "${FS}" == "btrfs" ]]; then
+
 echo -ne "
 -------------------------------------------------------------------------
                     Creating Snapper Config
 -------------------------------------------------------------------------
 "
 
-SNAPPER_CONF="$HOME/ArchTitus/configs/etc/snapper/configs/root"
-mkdir -p /etc/snapper/configs/
-cp -rfv ${SNAPPER_CONF} /etc/snapper/configs/
-
-SNAPPER_CONF_D="$HOME/ArchTitus/configs/etc/conf.d/snapper"
-mkdir -p /etc/conf.d/
-cp -rfv ${SNAPPER_CONF_D} /etc/conf.d/
-
-fi
+pacman -Rc f2fs-tools --noconfirm
+pacman -S snapper grub-btrfs btrfs-assistant-git --noconfirm
+cp -rfv /home/lulle/lulz/btrfs/* /etc/
 
 echo -ne "
 -------------------------------------------------------------------------

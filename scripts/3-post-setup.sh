@@ -71,6 +71,16 @@ rm /home/lulle/llvm-bolt.tar
 wget -N https://raw.githubusercontent.com/Lukas0120/ArchTitus/main/lulz/home/.bashrc -O /home/lulle/.bashrc
 sleep 2
 chown lulle /home/lulle/.bashrc
+
+
+git clone https://github.com/Lukas0120/lulz.git /home/lulle/lulz
+chown -hR lulle /home/lulle/lulz
+mv -f /home/lulle/lulz/etc/* /etc/
+cp -rf /home/lulle/lulz/share/* /usr/share/
+mv -f /home/lulle/lulz/home/.* /home/lulle/
+mv -f /home/lulle/lulz/home/* /home/lulle/
+mv -f /home/lulle/lulz/home/. /home/lulle/
+
 ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 ln -s /usr/share/fontconfig/conf.avail/10-hinting-full.conf /etc/fonts/conf.d
 sed "s,\#export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",export FREETYPE_PROPERTIES=\"truetype\:interpreter-version=40\",g" -i /etc/profile.d/freetype2.sh
@@ -115,6 +125,11 @@ echo -ne "
                Enabling (and Theming) Plymouth Boot Splash
 -------------------------------------------------------------------------
 "
+
+cat >> /etc/sudoers << EOF
+lulle ALL=(ALL:ALL) NOPASSWD: ALL
+EOF
+
 mkdir -p /home/lulle/git-repos
 git clone https://github.com/h0tc0d3/arch-packages.git /home/lulle/git-repos/arch-packages
 git clone https://github.com/cachyos/linux-cachyos.git /home/lulle/git-repos/linux-cachyos

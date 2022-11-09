@@ -75,7 +75,6 @@ echo -ne "
 # @description Creates the btrfs subvolumes. 
 createsubvolumes () {
     btrfs subvolume create /mnt/@
-    btrfs subvolume create /mnt/@home
     btrfs subvolume create /mnt/@var
     btrfs subvolume create /mnt/@tmp
     btrfs subvolume create /mnt/@opt
@@ -85,11 +84,10 @@ createsubvolumes () {
 
 # @description Mount all btrfs subvolumes after root has been mounted.
 mountallsubvol () {
-    mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
     mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
     mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/var
-    mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/opt
-    mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/srv
+    mount -o ${MOUNT_OPTIONS},subvol=@opt ${partition3} /mnt/opt
+    mount -o ${MOUNT_OPTIONS},subvol=@srv ${partition3} /mnt/srv
     mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${partition3} /mnt/.snapshots
 }
 

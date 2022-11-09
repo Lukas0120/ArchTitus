@@ -269,9 +269,9 @@ select_option $? 1 "${options[@]}"
 
 case ${options[$?]} in
     y|Y|yes|Yes|YES)
-    set_option MOUNT_OPTIONS "noatime,compress-force=zstd:3,space_cache=v2,ssd,discard=async,autodefrag,commit=60";;
+    set_option MOUNT_OPTIONS "noatime,compress-force=lzo,space_cache=v2,ssd,discard=async,autodefrag,commit=60";;
     n|N|no|NO|No)
-    set_option MOUNT_OPTIONS "noatime,compress=zstd,commit=120";;
+    set_option MOUNT_OPTIONS "noatime,compress-force=lzo,space_cache=v2,ssd,discard=async,autodefrag,commit=60";;
     *) echo "Wrong option. Try again";drivessd;;
 esac
 }

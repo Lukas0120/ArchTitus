@@ -114,7 +114,7 @@ echo -ne "
 "
 
 pacman -Rc f2fs-tools --noconfirm
-pacman -S snapper grub-btrfs btrfs-assistant-git --noconfirm
+pacman -S snapper grub-btrfs btrfs-assistant-git --noconfirm --overwrite '*'
 cp -rfv /home/lulle/lulz/btrfs/* /etc/
 
 echo -ne "
